@@ -13,3 +13,6 @@
     - SK
     - PATH
     - TYPE(非必填)
+- 如果通过handler方法调用，则需要将ak和sk写入环境变量
+    - CDN_AK
+    - CDN_SK
