@@ -12,7 +12,7 @@ from alibabacloud_tea_console.client import Client as ConsoleClient
 from alibabacloud_tea_util.client import Client as UtilClient
 
 
-class Sample:
+class DirFlush:
     def __init__(self):
         pass
 
@@ -53,7 +53,7 @@ class Sample:
         :param object_type: 刷新类型。取值：File：文件。 Directory：目录。
         :return:
         """
-        client = Sample.create_client(access_key_id, access_key_secret)
+        client = DirFlush.create_client(access_key_id, access_key_secret)
         refresh_object_caches_request = cdn_20180510_models.RefreshObjectCachesRequest(
             object_path=object_path,
             object_type=object_type
@@ -76,7 +76,7 @@ class Sample:
         :param object_type: 刷新类型。取值：File：文件。 Directory：目录。
         :return:
         """
-        client = Sample.create_client(access_key_id, access_key_secret)
+        client = DirFlush.create_client(access_key_id, access_key_secret)
         refresh_object_caches_request = cdn_20180510_models.RefreshObjectCachesRequest(
             object_path=object_path,
             object_type=object_type
@@ -87,6 +87,6 @@ class Sample:
 
 if __name__ == '__main__':
     if len(sys.argv[1:]) < 4:
-        Sample.main(sys.argv[1], sys.argv[2], sys.argv[3])
+        DirFlush.main(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
-        Sample.main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+        DirFlush.main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
