@@ -3,7 +3,6 @@
 import sys
 import os
 import logging
-from typing import List
 import urllib.parse
 from Tea.core import TeaCore
 
