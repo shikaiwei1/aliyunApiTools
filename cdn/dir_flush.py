@@ -134,7 +134,7 @@ def handler(environ, start_response):
         logging.log(err)
         raise err
     status = '200 OK'
-    response_headers = [('Content-type', 'text/plain')]
+    response_headers = [('Content-type', 'application/json')]
     start_response(status, response_headers)
     return [result.encode()]
 
