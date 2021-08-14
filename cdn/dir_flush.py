@@ -12,6 +12,11 @@ from alibabacloud_cdn20180510 import models as cdn_20180510_models
 from alibabacloud_tea_console.client import Client as ConsoleClient
 from alibabacloud_tea_util.client import Client as UtilClient
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s'
+)  # logging.basicConfig函数对日志的输出格式及方式做相关配置
+
 
 class DirFlush:
     def __init__(self):
@@ -110,28 +115,19 @@ def handler(environ, start_response):
     :param start_response:
     :return: 返回执行结果
     """
-    # context = environ['fc.context']
-    # request_uri = environ['fc.request_uri']
-    for k, v in environ.items():
-        if k.startswith('HTTP_'):
-            # process custom request headers
-            pass
-    # do something here
     request_param = urllib.parse.parse_qs(environ['QUERY_STRING'])
+    logging.info("requestParam:[%s]", request_param)
     ak = os.getenv("CDN_AK")
     sk = os.getenv("CDN_SK")
     path = request_param["path"][0]
-    object_type = request_param["type"][0]
-    object_type = "File" if (
-            object_type is None
-            or
-            (object_type != "Directory" and object_type != "File")
-    ) \
+    object_type = "File" if request_param.get("type") is None else request_param["type"][0]
+    object_type = "File" if object_type != "Directory" and object_type != "File" \
         else object_type  # 用来为object_type赋予一个默认值
+    logging.info("ak:[%s],path:[%s],type:[%s]", ak, path, object_type)
     try:
         result = DirFlush.main(ak, sk, path, object_type)
     except IOError as err:
-        logging.log(err)
+        logging.error(err)
         raise err
     status = '200 OK'
     response_headers = [('Content-type', 'application/json')]
